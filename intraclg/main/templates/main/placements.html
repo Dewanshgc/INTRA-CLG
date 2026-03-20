@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/x-icon" href="{% static 'images/logo_nobg.png' %}">
+  <title>Placements | Pallavan College of Engineering</title>
+
+  <!-- Bootstrap, Fonts, AOS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; background-color: #f8f9fa; }
+    .navbar { position: sticky; top: 0; z-index: 1000; background-color: #ffffff !important; border-bottom: 1px solid #dee2e6; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); }
+    .navbar .navbar-brand img { height: 40px; width: 40px; }
+    .navbar .navbar-brand span { color: #0d6efd; }
+    .navbar .navbar-nav .nav-link { color: #0d6efd !important; margin: 0 8px; position: relative; font-weight: 500; }
+    .navbar .nav-link.fancy-link::after {
+      content: ""; position: absolute; width: 0%; height: 2px; bottom: 0; left: 0; background-color: #ffc107; transition: width 0.3s ease;
+    }
+    .navbar .nav-link.fancy-link:hover::after { width: 100%; }
+    .navbar .nav-link:hover { color: #ffc107 !important; }
+    .navbar .btn-outline-light { color: #0d6efd; border-color: #0d6efd; }
+    .navbar .btn-outline-light:hover { background-color: #0d6efd; color: white; }
+    .navbar .btn-warning:hover { background-color: #ffca2c; }
+
+    .recruiter-logo {
+      height: 100px; width: 100px; object-fit: contain; border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      animation: fadeZoomIn 1s ease forwards;
+      opacity: 0;
+    }
+
+    .recruiter-logo:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    @keyframes fadeZoomIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .counter { font-weight: bold; font-size: 1rem; color: #0d6efd; }
+    .table-striped tbody tr td:first-child { font-weight: 500; }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg glass-navbar">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center fw-bold" href="#">
+      <span class="fs-4">
+        <img src="{% static 'images/logo.jpg' %}" alt="Pallavan Logo" />
+      </span>
+      <span class="ms-2 fs-5">PALLAVAN COLLEGE OF ENGINEERING</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item"><a class="nav-link fancy-link" href="{% url 'index' %}">Home</a></li>
+        <li class="nav-item"><a class="nav-link fancy-link" href="{% url 'about' %}">About</a></li>
+        <li class="nav-item"><a class="nav-link fancy-link" href="{% url 'events' %}">Events</a></li>
+        <li class="nav-item"><a class="nav-link fancy-link" href="{% url 'admissions' %}">Admissions</a></li>
+        <li class="nav-item"><a class="nav-link fancy-link" href="{% url 'placements' %}">Placements</a></li>
+        <li class="nav-item"><a class="nav-link fancy-link" href="{% url 'achievements' %}">Achievements</a></li>
+        <li class="nav-item"><a class="btn btn-outline-light btn-sm mx-1 px-3 rounded-pill" href="{% url 'login' %}">Login</a></li>
+        <li class="nav-item"><a class="btn btn-warning btn-sm px-3 rounded-pill" href="{% url 'signup' %}">Sign Up</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Placements Content -->
+<section class="container mt-5" data-aos="fade-up">
+  <h1 class="text-center mb-4">PLACEMENT CELL</h1>
+  <p class="text-center">Our dedicated Placement and Training Cell works tirelessly to ensure students are well-prepared for their careers.</p>
+
+  <h4 class="mt-5 mb-3 text-center">TOP RECRUITERS</h4>
+  <div class="row row-cols-2 row-cols-md-4 g-4 text-center" data-aos="zoom-in">
+    {% for company in companies %}
+      <div class="col">
+        <img src="{% static 'images/recruiters/' %}{{ company.name }}.{{ company.ext }}" alt="{{ company.name }}" class="recruiter-logo mt-2"/>
+        <p>{{ company.name|upper }}</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <h4 class="mt-5 mb-3 text-center" data-aos="fade-up">PLACEMENT STATISTICS (2024)</h4>
+  <div class="table-responsive" data-aos="fade-up" data-aos-delay="200">
+    <table class="table table-striped text-center">
+      <thead>
+        <tr>
+          <th>Branch</th>
+          <th>Students Placed</th>
+          <th>Highest Package</th>
+          <th>Average Package</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in stats %}
+        <tr>
+          <td>{{ row.branch }}</td>
+          <td>{{ row.placed }}</td>
+          <td>{{ row.highest }} LPA</td>
+          <td>{{ row.average }} LPA</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-primary text-white text-center p-3 mt-5">
+  &copy; 2025 Pallavan College of Engineering. All rights reserved.
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>AOS.init();</script>
+
+</body>
+</html>

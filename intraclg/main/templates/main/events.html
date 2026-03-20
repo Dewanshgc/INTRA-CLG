@@ -1,0 +1,218 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/x-icon" href="{% static 'images/logo_nobg.png' %}">
+  <title>Events | Pallavan College of Engineering</title>
+
+  <!-- Bootstrap, Google Fonts, Font Awesome, AOS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+      background-color: #f8f9fa;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #ffffff !important;
+      border-bottom: 1px solid #dee2e6;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar .navbar-brand img {
+      height: 40px;
+      width: 40px;
+    }
+
+    .navbar .navbar-brand span {
+      color: #0d6efd;
+    }
+
+    .navbar .navbar-nav .nav-link {
+      color: #0d6efd !important;
+      margin: 0 8px;
+      position: relative;
+      font-weight: 500;
+    }
+
+    .navbar .nav-link.fancy-link::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: #ffc107;
+      transition: width 0.3s ease;
+    }
+
+    .navbar .nav-link.fancy-link:hover::after {
+      width: 100%;
+    }
+
+    .navbar .nav-link:hover {
+      color: #ffc107 !important;
+    }
+
+    .navbar .btn-outline-light {
+      color: #0d6efd;
+      border-color: #0d6efd;
+    }
+
+    .navbar .btn-outline-light:hover {
+      background-color: #0d6efd;
+      color: white;
+    }
+
+    .navbar .btn-warning:hover {
+      background-color: #ffca2c;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('{% static "images/event-banner.jpg" %}') center/cover no-repeat;
+      color: white;
+      padding: 100px 20px;
+      text-align: center;
+    }
+
+    #searchInput {
+      margin: 30px auto;
+      max-width: 500px;
+      border-radius: 30px;
+      padding: 12px 20px;
+    }
+
+    .event-card {
+      transition: 0.3s ease;
+    }
+
+    .event-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .event-title {
+      font-weight: 600;
+      color: #0d6efd;
+    }
+
+    footer {
+      background-color: #0d6efd;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg glass-navbar">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center fw-bold" href="{% url 'index' %}">
+      <span class="fs-4"><img src="{% static 'images/logo.jpg' %}" alt="Pallavan Logo" /></span>
+      <span class="ms-2 fs-5">PALLAVAN COLLEGE OF ENGINEERING</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item"><a class="nav-link fancy-link" href="{% url 'index' %}">Home</a></li>
+        <li class="nav-item"><a class="nav-link fancy-link" href="{% url 'about' %}">About</a></li>
+        <li class="nav-item"><a class="nav-link fancy-link" href="{% url 'events' %}">Events</a></li>
+        <li class="nav-item"><a class="nav-link fancy-link" href="{% url 'admissions' %}">Admissions</a></li>
+        <li class="nav-item"><a class="nav-link fancy-link" href="{% url 'placements' %}">Placements</a></li>
+        <li class="nav-item"><a class="nav-link fancy-link" href="{% url 'achievements' %}">Achievements</a></li>
+        <li class="nav-item"><a class="btn btn-outline-light btn-sm mx-1 px-3 rounded-pill" href="{% url 'login' %}">Login</a></li>
+        <li class="nav-item"><a class="btn btn-warning btn-sm px-3 rounded-pill" href="{% url 'signup' %}">Sign Up</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <h1 class="display-5 fw-bold">CAMPUS EVENTS</h1>
+    <p class="lead">Explore all the latest events, workshops, fests, and seminars happening at Pallavan.</p>
+  </div>
+</section>
+
+<!-- Search -->
+<div class="container text-center">
+  <input type="text" id="searchInput" class="form-control shadow-sm" placeholder="Search events by name, type, or department...">
+</div>
+
+<!-- Event Cards -->
+<section class="py-5">
+  <div class="container">
+    <div class="row g-4" id="eventContainer">
+
+      <div class="col-md-4 event-card" data-aos="fade-up" data-name="Tech Fest" data-type="technical" data-dept="cse">
+        <div class="card h-100">
+          <img src="{% static 'images/b-league.png' %}" class="card-img-top" alt="Tech Fest">
+          <div class="card-body">
+            <h5 class="event-title">B-LEAGUE 2025</h5>
+            <p class="card-text">One day Business league for UG/PG students to showcase their skills in business management and entrepreneurship.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 event-card" data-aos="fade-up" data-name="Placement Drive" data-type="career" data-dept="ece">
+        <div class="card h-100">
+          <img src="{% static 'images/casagrand.png' %}" class="card-img-top" alt="Placement Drive">
+          <div class="card-body">
+            <h5 class="event-title">PLACEMENT DRIVE</h5>
+            <p class="card-text">A grand collaboration with Casagrand for students to get placed in the company.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 event-card" data-aos="fade-up" data-name="Women's Day" data-type="celebration" data-dept="mech">
+        <div class="card h-100">
+          <img src="{% static 'images/womans-day.png' %}" class="card-img-top" alt="Women's Day">
+          <div class="card-body">
+            <h5 class="event-title">WOMEN'S DAY CELEBRATION</h5>
+            <p class="card-text">Women's Day celebration as a symbol of empowerment and growth across all departments.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  &copy; 2025 Pallavan College of Engineering. All rights reserved.
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+  document.getElementById('searchInput').addEventListener('keyup', function () {
+    let query = this.value.toLowerCase();
+    let events = document.querySelectorAll('.event-card');
+    events.forEach(card => {
+      let name = card.dataset.name.toLowerCase();
+      let type = card.dataset.type.toLowerCase();
+      let dept = card.dataset.dept.toLowerCase();
+      card.style.display = name.includes(query) || type.includes(query) || dept.includes(query) ? 'block' : 'none';
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Academic Reports | IntraClg Faculty</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    body {
+      background-color: #f4f7fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .sidebar {
+      height: 100vh;
+      background: linear-gradient(180deg, #ffffff, #f1f5ff);
+      padding: 25px 20px;
+      border-right: 1px solid #ddd;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      font-weight: 500;
+      color: #0d6efd;
+      text-decoration: none;
+      padding: 12px 16px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background-color: #e0ecff;
+      color: #084298;
+      transform: translateX(5px);
+    }
+
+    .sidebar a.active {
+      background-color: #d0e4ff;
+      font-weight: bold;
+    }
+
+    .main-content {
+      padding: 40px 50px;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    table {
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+    }
+
+    .table th, .table td {
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .action-buttons .btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 30px 20px;
+      }
+    }
+
+    footer {
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-semibold" href="#">IntraClg - Faculty</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link text-white" href="{% url 'logout' %}">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Page Layout -->
+<div class="container-fluid mt-3">
+  <div class="row">
+
+    <!-- Sidebar -->
+    <div class="col-md-3 sidebar">
+      <div class="text-center mb-4">
+        <img src="{% if profile.photo %}{{ profile.photo.url }}{% else %}{% static 'images/default_profile.jpg' %}{% endif %}" alt="Profile" class="mb-2" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);" />
+        <p class="mt-2 mb-0 fw-bold">{{ profile.full_name }}</p>
+        <small class="text-muted">Faculty</small>
+      </div>
+
+      <a href="{% url 'faculty_dashboard' %}"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+      <a href="{% url 'faculty_profile' %}"><i class="bi bi-person-circle me-2"></i> Profile</a>
+      <a href="{% url 'faculty_feedback' %}"><i class="bi bi-chat-left-text me-2"></i> Student Feedback</a>
+      <a href="{% url 'faculty_materials' %}"><i class="bi bi-book-half me-2"></i> Study Materials</a>
+      <a href="{% url 'faculty_events' %}"><i class="bi bi-calendar-event me-2"></i> Manage Events</a>
+      <a href="{% url 'faculty_reports' %}" class="active"><i class="bi bi-clipboard-data me-2"></i> Academic Reports</a>
+      <a href="{% url 'universal_chat' %}"><i class="bi bi-chat-dots me-2"></i> Chat with Users</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9 main-content">
+      <h3 class="text-primary mb-4"><i class="bi bi-bar-chart-line me-2"></i>Academic Reports</h3>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button class="btn btn-outline-primary"><i class="bi bi-eye"></i> Preview</button>
+        <button class="btn btn-success"><i class="bi bi-download"></i> Download PDF</button>
+      </div>
+
+      <!-- Reports Table -->
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th>Student Name</th>
+              <th>Department</th>
+              <th>Attendance (%)</th>
+              <th>Assignment Avg</th>
+              <th>Midterm Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Deepika R</td><td>CSE</td><td>96</td><td>88</td><td>42 / 50</td></tr>
+            <tr><td>Karthik S</td><td>ECE</td><td>89</td><td>79</td><td>40 / 50</td></tr>
+            <tr><td>Abinaya P</td><td>EEE</td><td>93</td><td>84</td><td>45 / 50</td></tr>
+            <tr><td>Meena K</td><td>MECH</td><td>92</td><td>81</td><td>44 / 50</td></tr>
+            <tr><td>Raghu V</td><td>CSE</td><td>87</td><td>76</td><td>38 / 50</td></tr>
+            <tr><td>Priya M</td><td>ECE</td><td>95</td><td>90</td><td>48 / 50</td></tr>
+            <tr><td>Senthil A</td><td>EEE</td><td>90</td><td>85</td><td>43 / 50</td></tr>
+            <tr><td>Lavanya R</td><td>IT</td><td>94</td><td>89</td><td>46 / 50</td></tr>
+            <tr><td>Vignesh P</td><td>MECH</td><td>88</td><td>77</td><td>39 / 50</td></tr>
+            <tr><td>Janani S</td><td>IT</td><td>91</td><td>82</td><td>41 / 50</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-primary text-white text-center p-3 mt-5">
+  &copy; 2025 IntraClg Faculty Portal. All rights reserved.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
